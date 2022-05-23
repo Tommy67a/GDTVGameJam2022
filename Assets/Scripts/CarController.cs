@@ -18,6 +18,10 @@ public class CarController : MonoBehaviour
     [Tooltip("Modify the effect of gravity without changing the cars mass")]
     [SerializeField] float gravityMultiplier = 5f;
 
+    [SerializeField] int coins;
+
+    UIManager uiManager;
+
     Rigidbody sphereRigidbody;
     Vector2 rawInput;
     float moveInput;
@@ -33,6 +37,7 @@ public class CarController : MonoBehaviour
     {
         //This makes sure we don't have issues with the car body following the sphere
         sphereRigidbody.transform.parent = null;
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     void FixedUpdate()
@@ -95,5 +100,12 @@ public class CarController : MonoBehaviour
     void CheckIfGrounded()
     {
         isGrounded = Physics.CheckSphere(transform.position, distanceCheck, groundLayer, QueryTriggerInteraction.Ignore);
+    }
+
+    public void AddCoins ()
+    {
+        coins++;
+
+        uiManager.UpdateCoinDisplay(coins);
     }
 }
